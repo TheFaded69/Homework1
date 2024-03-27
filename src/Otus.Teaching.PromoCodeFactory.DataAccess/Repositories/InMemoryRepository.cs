@@ -28,18 +28,17 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Repositories
             return Task.FromResult(Data.FirstOrDefault(x => x.Id == id));
         }
 
-        public async Task<ActionResult> AddEmployeeAsync(BaseEntity employeeRequest)
+        public async Task AddAsync(BaseEntity employeeRequest)
         {
             if (Data is List<BaseEntity> listData)
             {
                 listData.Add(employeeRequest);
-                return await Task.FromResult();
             }
             else
                 throw new ArgumentOutOfRangeException();
         }
 
-        public async Task<ActionResult> UpdateEmployeeAsync(BaseEntity employeeRequest)
+        public async Task UpdateAsync(BaseEntity employeeRequest)
         {
             if (Data is List<BaseEntity> listData)
             {
@@ -51,18 +50,16 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Repositories
                         return data;
                     })
                     .ToList();
-                return  Task.FromResult(200);
             }
             else
                 throw new ArgumentOutOfRangeException();
         }
 
-        public async Task<ActionResult> DeleteEmployeeAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             if (Data is List<BaseEntity> listData)
             {
                 listData.Remove(listData.FirstOrDefault(data => data.Id == id));
-                return await Task.FromResult();
             }
             else
                 throw new ArgumentOutOfRangeException();

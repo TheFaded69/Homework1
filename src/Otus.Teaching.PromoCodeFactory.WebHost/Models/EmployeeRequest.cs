@@ -4,9 +4,11 @@ using Otus.Teaching.PromoCodeFactory.Core.Domain;
 
 namespace Otus.Teaching.PromoCodeFactory.WebHost.Models
 {
-    public class EmployeeRequest : BaseEntity
+    public class EmployeeRequest
     {
-        public string FullName { get; set; }
+        public Guid Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public string Email { get; set; }
 

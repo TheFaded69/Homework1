@@ -77,21 +77,47 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> AddEmployeeAsync(EmployeeRequest employeeRequest)
+        public async Task AddEmployeeAsync(EmployeeRequest employeeRequest)
         {
-            return await _employeeRepository.AddEmployeeAsync(employeeRequest);
+            await  _employeeRepository.AddAsync(new Employee
+            {
+                Id = Guid.NewGuid(),
+                FirstName = employeeRequest.FirstName,
+                LastName = employeeRequest.LastName,
+                Email = employeeRequest.Email,
+                Roles = new List<Role>(employeeRequest.Roles.Select(role => new Role
+                {
+                    Id = Guid.NewGuid(),
+                    Name = role.Name,
+                    Description = role.Description
+                })),
+                AppliedPromocodesCount = employeeRequest.AppliedPromocodesCount
+            });
         }
         
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateEmployeeAsync(EmployeeRequest employeeRequest)
+        public async Task UpdateEmployeeAsync(EmployeeRequest employeeRequest)
         {
-            return await _employeeRepository.UpdateEmployeeAsync(employeeRequest);
+            await _employeeRepository.UpdateAsync(new Employee
+            {
+                Id = employeeRequest.Id,
+                FirstName = employeeRequest.FirstName,
+                LastName = employeeRequest.LastName,
+                Email = employeeRequest.Email,
+                Roles = new List<Role>(employeeRequest.Roles.Select(role => new Role
+                {
+                    Id = Guid.NewGuid(),
+                    Name = role.Name,
+                    Description = role.Description
+                })),
+                AppliedPromocodesCount = employeeRequest.AppliedPromocodesCount
+            });
         }
         
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult> DeleteEmployeeAsync(Guid id)
+        public async Task DeleteEmployeeAsync(Guid id)
         {
-            return await _employeeRepository.DeleteEmployeeAsync(id);
+            await _employeeRepository.DeleteAsync(id);
         }
     }
 }
